@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLB PLayer List</title>
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background: white;;
+            color:black;
+        }
+
+        .teamDiv {
+            border: 0px solid #ffff00;
+            display: inline-block;
+            font-size: 15px;
+            padding:5px;
+
+        }
+        .innerDiv {
+            padding:10px;
+            border: 1px solid #ccc;
+            background: white;
+            box-shadow: 0 2px 3px rgb(0 0 0 / 10%);
+
+
+        }
+
+        .teamContainer {
+            /* display: inline-block; */
+            background: #eee;
+            /* background: red; */
+            font-size: 0px;
+            padding:5px;
+        }
+
+        .header__nav-top {
+            background-color: #041e42;
+            position: relative;
+            height: 70px;
+            display: block
+        }
+
+        .menugroup {
+            height: 70px;
+            /* background-color: green; */
+            position: absolute;
+            top: 0px;
+            font-size: 0px;
+            padding: 0px;
+        }
+
+        .header__nav-top>.rightside {
+            right: 0px;
+        }
+
+        .header__nav-top>.leftside {
+            left: 100px;
+        }
+
+        .header__nav-top .menuitem {
+            transform: translateY(-50%);
+            margin-top: 35px;
+            font-size: 30px;
+            border-bottom: 0px solid #ffff00;
+            display: inline-block;
+            /* background-color: red; */
+        }
+
+        .header__nav-top .menuitem>a {
+            color: white;
+        }
+
+        .header__nav-top>.rightside>.menuitem {
+            margin-right: 15px;
+        }
+
+        .header__nav-top>.leftside>.menuitem {
+            margin-left: 15px;
+        }
+
+        #logo {
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        div.header__mnav-top {
+            /* background: red; */
+            display: none;
+        }
+
+        #imgtd {
+            width: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            margin: 0px;
+        }
+
+        @media screen and (max-width: 600px) {
+            div.header__nav-top {
+                /* background: red; */
+                display: none;
+            }
+
+            div.header__mnav-top {
+                /* background: red; */
+                position: relative;
+                background-color: #041e42;
+                display: block;
+                text-align: center;
+
+            }
+
+            div.header__mnav-top>img {
+                margin-top: 5px;
+            }
+
+            .menugroupMobile {
+                padding: 0px;
+                border: 0px solid red;
+                font-size: 0px;
+                display: table;
+                width: 100%;
+            }
+
+            .menugroupMobile>li {
+                border: 0px solid white;
+                display: table-cell;
+                font-size: 20px;
+                width: 25%;
+            }
+
+            .menugroupMobile>li>a {
+                color: white;
+            }
+
+            #hambergur {
+                position: absolute;
+                left: 5px;
+                top: 0px;
+                font-size: 20px;
+                /* background-color: red; */
+            }
+
+            .teamDiv {
+                width: calc(100% / 1);
+            }
+
+        }
+
+        @media screen and (min-width: 600px) {
+            .teamDiv {
+                width: calc(100% / 2);
+            }
+        }
+
+        @media screen and (min-width: 700px) {
+            .teamDiv {
+                width: calc(100% / 3);
+            }
+        }
+
+        @media screen and (min-width: 800px) {
+            .teamDiv {
+                width: calc(100% / 4);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header__nav-top">
+        <a href="https://mlbplayerlist.com/playersearch">
+            <img src="//www.mlbstatic.com/team-logos/league-on-dark/1.svg" id="logo" height="50">
+        </a>
+        <ul class="menugroup leftside">
+            <li class="menuitem"><a href="https://mlbplayerlist.com/schedule">Schedule</a></li>
+            <li class="menuitem"><a href="">Rmenu2</a></li>
+        </ul>
+        <ul class="menugroup rightside">
+            <li class="menuitem"><a href="https://mlbplayerlist.com/schedule">Result</a></li>
+            <li class="menuitem"><a href="">menu2</a></li>
+            <li class="menuitem"><a href="">menu3</a></li>
+            <li class="menuitem"><a href="">menu4</a></li>
+        </ul>
+    </div>
+
+    <div class="header__mnav-top">
+        <div id="hambergur"><i class="fas fa-bars"></i></div>
+        <img src="//www.mlbstatic.com/team-logos/league-on-dark/1.svg" height="25">
+        <ul class="menugroupMobile bottomside">
+            <li class="menuitem"><a href="">Rmenu1</a></li>
+            <li class="menuitem"><a href="">Rmenu1</a></li>
+            <li class="menuitem"><a href="">Rmenu1</a></li>
+            <li class="menuitem"><a href="">Rmenu2</a></li>
+        </ul>
+    </div>
+
+
+    <div>Beta Version searching only player last name </div>
+
+    <input class="search"> </input>
+    <button class="searchButton"> Search </button>
+
+    <div class="teamContainer">
+        <% for(let i=0;i<teamInfoList.length; i++){ %>
+            <div class="teamDiv">
+                <div class="innerDiv">
+                    <div style="text-align: center;"> <img id="imgFile" src="<%= teamInfoList[i].logo%>" height="80" />
+                    </div>
+                    <div style="text-align: center;">
+                        <%= teamInfoList[i].name%>
+                    </div>
+                    <div>
+                        <a style="color: black;"
+                            href="https://mlbplayerlist.com/teamSearch?teamId=<%= teamInfoList[i].id%>">
+                            Roster
+                        </a>
+                        <a style="color: black;" href="<%=teamInfoList[i].website%>">
+                            Link
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+    </div>
+
+
+
+
+    <script>
+        let searchButton = document.querySelector(".searchButton");
+        searchButton.addEventListener('click', function () {
+            let input = document.querySelector(".search");
+            input = input.value;
+            let url = "https://mlbplayerlist.com/searchResult?playerName=" + input;
+            location.href = url;
+        })
+    </script>
+</body>
+
+</html>

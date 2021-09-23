@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>MLB PLayer List</title>
+    <link rel="stylesheet" href="/index.css">
+    <style>
+        .teamInfo{ 
+            border: 2px solid #ffff00;
+            color: #041e42;
+        }
+        .logo { 
+            width: 20px;
+            display: inline-block;
+            border: 2px solid red;
+        }
+        .teamName{
+            width: 110px;
+            display: inline-block;
+            border: 2px solid green;
+        }
+        .teamScore{
+            width: 40px;
+            display: inline-block
+        }
+
+
+        .header>th {
+            background-color: #333;
+            text-align: center;
+        }
+
+        tr>td {
+            text-align: center;
+            background-color: white;
+            /* color:red; */
+        }
+
+        table {
+            width: 100%
+        }
+
+        table,
+        td,
+        th {
+            border: 1px solid #555;
+            border-collapse: collapse;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .header__nav-top {
+            background-color: #041e42;
+            position: relative;
+            height: 70px;
+            display: block
+        }
+
+        .menugroup {
+            height: 70px;
+            /* background-color: green; */
+            position: absolute;
+            top: 0px;
+            font-size: 0px;
+            padding: 0px;
+        }
+
+        .header__nav-top>.rightside {
+            right: 0px;
+        }
+
+        .header__nav-top>.leftside {
+            left: 100px;
+        }
+
+        .header__nav-top .menuitem {
+            transform: translateY(-50%);
+            margin-top: 35px;
+            font-size: 30px;
+            border-bottom: 0px solid #ffff00;
+            display: inline-block;
+            /* background-color: red; */
+        }
+
+        .header__nav-top .menuitem>a {
+            color: white;
+        }
+
+        .header__nav-top>.rightside>.menuitem {
+            margin-right: 15px;
+        }
+
+        .header__nav-top>.leftside>.menuitem {
+            margin-left: 15px;
+        }
+
+        #logo {
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        div.header__mnav-top {
+            /* background: red; */
+            display: none;
+        }
+
+        #imgtd {
+            width: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            margin: 0px;
+        }
+       
+        .teamtable td {
+            white-space: nowrap;
+            font-size: 15px;
+            /* word-break: keep-all;
+            font-size:16px; */
+        }
+
+        @media screen and (max-width: 600px) {
+            div.header__nav-top {
+                /* background: red; */
+                display: none;
+            }
+
+            div.header__mnav-top {
+                /* background: red; */
+                position: relative;
+                background-color: #041e42;
+                display: block;
+                text-align: center;
+
+            }
+
+            div.header__mnav-top>img {
+                margin-top: 5px;
+            }
+
+            .menugroupMobile {
+                padding: 0px;
+                border: 0px solid red;
+                font-size: 0px;
+                display: table;
+                width: 100%;
+            }
+
+            .menugroupMobile>li {
+                border: 0px solid white;
+                display: table-cell;
+                font-size: 20px;
+                width: 25%;
+            }
+
+            .menugroupMobile>li>a {
+                color: white;
+            }
+
+            #hambergur {
+                position: absolute;
+                left: 5px;
+                top: 0px;
+                font-size: 20px;
+                /* background-color: red; */
+            }
+        }
+
+        .teamsDiv {
+            color: #041e42;
+            display: flex;
+        }
+
+        .teamDiv {
+            border: 0px solid #ffff00;
+            display: inline-block;
+            font-size: 15px;
+            padding:5px;
+        }
+        .innerDiv {
+            padding:15px;
+            border: 1px solid #ccc;
+            background: white;
+            box-shadow: 0 2px 3px rgb(0 0 0 / 10%);
+        }
+        .gameDetail{ 
+            color: #041e42;
+            text-align: left;
+        }
+
+
+        @media screen and (min-width: 600px) {
+            .teamDiv {
+                width: calc(100% / 2);
+            }
+        }
+
+        @media screen and (min-width: 700px) {
+            .teamDiv {
+                width: calc(100% / 3);
+            }
+        }
+
+        @media screen and (min-width: 800px) {
+            .teamDiv {
+                width: calc(100% / 4);
+            
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="header__nav-top">
+        <a href="https://mlbplayerlist.com/playersearch">
+            <img src="//www.mlbstatic.com/team-logos/league-on-dark/1.svg" id="logo" height="50">
+        </a>
+        <ul class="menugroup leftside">
+            <li class="menuitem"><a href="https://mlbplayerlist.com/schedule">Schedule</a></li>
+            <li class="menuitem"><a href="">Rmenu2</a></li>
+        </ul>
+        <ul class="menugroup rightside">
+            <li class="menuitem"><a href="https://mlbplayerlist.com/schedule">Result</a></li>
+            <li class="menuitem"><a href="">menu2</a></li>
+            <li class="menuitem"><a href="">menu3</a></li>
+            <li class="menuitem"><a href="">menu4</a></li>
+        </ul>
+    </div>
+
+    <div class="header__mnav-top">
+        <div id="hambergur"><i class="fas fa-bars"></i></div>
+        <img src="//www.mlbstatic.com/team-logos/league-on-dark/1.svg" height="25">
+        <ul class="menugroupMobile bottomside">
+            <li class="menuitem"><a href="https://mlbplayerlist.com/schedule">Result</a></li>
+            <li class="menuitem"><a href="">Rmenu1</a></li>
+            <li class="menuitem"><a href="">Rmenu1</a></li>
+            <li class="menuitem"><a href="">Rmenu2</a></li>
+        </ul>
+    </div>
+
+
+    
+       
+        <div class="teamContainer">
+            <% for(let i=0;i<gamesInfo.length; i++){ %>
+                <div class="teamDiv">
+                    <div class="innerDiv">
+                        <div class="teamInfo"> 
+                            <div class="logo"> 
+                                <img id="imgFile" src="<%-gamesInfo[i].awayTeamInfo.logo%>" height="15" />
+                            </div>
+                            <div class ="teamName"> 
+                                <%=gamesInfo[i].awayTeamInfo.shortName%> 
+                            </div>    
+                            <div class="teamScore"> 
+                                <%=gamesInfo[i].away_score%> 
+                            </div>
+                        </div>
+
+                        <div class="teamInfo"> 
+                            <div class="logo"> 
+                                <img id="imgFile" src="<%-gamesInfo[i].homeTeamInfo.logo%>" height="15" />
+                            </div>
+                            <div class ="teamName"> 
+                                <%=gamesInfo[i].homeTeamInfo.shortName%> 
+                            </div>    
+                            <div class="teamScore"> 
+                                <%=gamesInfo[i].home_score%> 
+                            </div>
+                        </div>
+                        <div style="color: #041e42;"> 
+                            <a href="https://mlbplayerlist.com/searchResult?playerName=<%=gamesInfo[i].winning_pitcher%>"> W : <%=gamesInfo[i].winning_pitcher%>  </a> 
+                            <a href="https://mlbplayerlist.com/searchResult?playerName=<%=gamesInfo[i].losing_pitcher%>"> L : <%=gamesInfo[i].losing_pitcher%>  </a>
+                            
+                        </div>
+
+                    </div>
+                </div>
+                <% } %>
+        </div>
+    
+
+    <button class="searchButton"> goBackToSearch </button>
+    <script>
+        let searchButton = document.querySelector(".searchButton");
+        searchButton.addEventListener('click', function () {
+            let url = "https://mlbplayerlist.com/playersearch";
+            location.href = url;
+        })
+
+
+        function makeTableSortable(table) {
+            let tbody = table.querySelector('tbody');
+            let cell = [...table.querySelectorAll('tbody > tr')][0].querySelectorAll('th');
+            cell.forEach((th, i) => {
+                let toggle = false;
+                th.addEventListener('click', e => {
+                    let trr = [...table.querySelectorAll('tbody > tr')];
+                    if (trr.length < 2) return;
+                    let tds = trr[1].querySelectorAll('td');
+                    let sortKey = tds[i].className;
+                    let trs = trr.splice(1)
+                    trs.forEach(tr => tr.parentElement.removeChild(tr))
+
+                    trs.sort(function (a, b) {
+                        let column = '.' + sortKey;
+                        let ac = a.querySelector(column).innerText.trim();
+                        let bc = b.querySelector(column).innerText.trim();
+                        let va = isNaN(ac) ? ac : Number(ac);
+                        let vb = isNaN(bc) ? bc : Number(bc);
+                        if (va > vb) {
+                            return 1 * (toggle ? 1 : -1)
+                        }
+                        if (va < vb) {
+                            return -1 * (toggle ? 1 : -1)
+                        }
+                        return 0
+                    });
+
+                    trs.forEach(tr => tbody.appendChild(tr))
+                    toggle = !toggle;
+                })
+            })
+        }
+
+
+        let table = document.querySelector('table');
+        makeTableSortable(table);
+
+    </script>
+</body>
+
+</body>
+
+</html>
