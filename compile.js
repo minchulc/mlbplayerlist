@@ -1,3 +1,13 @@
+/*
+mysql -u root -p
+ssh -i /Users/minchulcho/Documents/Keys/mChoKey.cer ubuntu@mlbplayerlist.com
+ALTER TABLE teamInfo ADD COLUMN leagueId INT AFTER name;
+
+// col 새로 만들 그 col에 값 넣기 
+INSERT INTO teamInfo (leagueId) VALUES (104) WHERE id = 108;
+UPDATE teamInfo SET leagueId = 104 WHERE id = 143;
+
+*/
 const DivSeriesJuly2W_COL = require('./mymodule/datasort.js');
 
 const promisify = require('util.promisify');
@@ -15,8 +25,7 @@ let fetch = require('node-fetch');
 const neatCsv = require('neat-csv');
 const isLogin = require("./isLogin.js");
 
-// mysql -u root -p
-
+var HTMLParser = require('node-html-parser');
 
 app.use(require('./birds'));
 app.use(require('./admin'));
@@ -567,6 +576,43 @@ app.get('/playersearch', async function (req, res) {
     res.render('playersearchBar', { teamInfoList });
 });
 
+app.get('/playersearch1', async function (req, res) {
+    // createTable();
+    let teamInfoList = await query(`select * from teamInfo`);
+    res.render('playersearchpage', { teamInfoList });
+});
+
+
+app.get('/pirates', async function (req, res) {
+    let teamInfoList = await query(`select * from teamInfo`);
+    let teamid = 134;
+    let command = `python3 ranksLink.py ${teamid}`;
+    shelljs.exec(command, async function (code, stdout, stderr) {
+        let ranksLink = JSON.parse(stdout)
+        res.render('pirates', { teamInfoList, ranksLink });
+    });
+});
+
+app.get('/cardinals', async function (req, res) {
+    let teamInfoList = await query(`select * from teamInfo`);
+    let teamid = 138;
+    let command = `python3 ranksLink.py ${teamid}`;
+    shelljs.exec(command, async function (code, stdout, stderr) {
+        let ranksLink = JSON.parse(stdout)
+        res.render('cardinals', { teamInfoList, ranksLink });
+    });
+});
+
+app.get('/redsox', async function (req, res) {
+    let teamInfoList = await query(`select * from teamInfo`);
+    let teamid = 111;
+    let command = `python3 ranksLink.py ${teamid}`;
+    shelljs.exec(command, async function (code, stdout, stderr) {
+        let ranksLink = JSON.parse(stdout)
+        res.render('redsox', { teamInfoList, ranksLink });
+    });
+});
+
 app.get('/teamSearch', async function (req, res) {
     console.log(req.query.teamId);
     let command = "python3 getRpster.py " + req.query.teamId;
@@ -581,37 +627,93 @@ app.get('/teamSearch', async function (req, res) {
     });
 });
 
+
+
+
+app.get('/test', async function (req, res) {
+    res.send(req.query.playerid)
+
+});
+
+
+
+app.get('/teamPage', async function (req, res) {
+    // console.log(req.query.teamId);
+    let teamid = req.query.teamId;
+    let data = await query(`select * from teamInfo where id = ${teamid}`);
+    let teamInfo = data[0];
+
+    let command = `python3 ranksLink.py ${req.query.teamId}`;
+
+    shelljs.exec(command, async function (code, stdout, stderr) {
+        let ranksLink = JSON.parse(stdout)
+
+        console.log("------------------------------------------------------------------");
+        (ranksLink.hrs).forEach(x => {
+            // console.log ( x["playerInfo"][0]["id"] )
+            console.log('***************');
+            console.log(x);
+            console.log( Object.keys(x["playerInfo"][0]));
+        })
+
+        res.render('teamPage', { teamInfo, ranksLink });
+    });
+});
+
 function getshortName(awayTeamInfo) {
     let teamName = awayTeamInfo["name"].split(' ')
     return teamName[teamName.length - 1];
 }
 
 app.get('/schedule', async function (req, res) {
-    //req.query.teamId
-    let command = "python3 schedule.py";
+    let teamid = req.query.teamId;
+    if (!teamid) {
+        teamid = 000;
+    }
+    let teamInfo = await getTeamInfo(teamid);
+    let command = `python3 schedule.py ${teamid}`;
     shelljs.exec(command, async function (code, stdout, stderr) {
         let gamesInfo = JSON.parse(stdout)
         for (let i = 0; i < gamesInfo.length; i++) {
-
-            let awayTeamInfo = await getTeamInfo(gamesInfo[i].awayId);
+            let awayTeamInfo = await getTeamInfo(gamesInfo[i].away_id);
             awayTeamInfo["shortName"] = getshortName(awayTeamInfo)
             gamesInfo[i].awayTeamInfo = awayTeamInfo;
-
 
             let homeTeamInfo = await getTeamInfo(gamesInfo[i].home_id);
             homeTeamInfo["shortName"] = getshortName(homeTeamInfo)
             gamesInfo[i].homeTeamInfo = homeTeamInfo;
-
-
-            console.log( gamesInfo[i]["winning_pitcher"] )
+        }
+        if (teamid === 000) {
+            res.render('schedule', { gamesInfo, teamInfo });
+        } else {
+            res.render('teamSchedule', { gamesInfo, teamInfo });
         }
 
+    });
+});
+
+app.get('/teamSchedule', async function (req, res) {
+    //req.query.teamId
+    let command = "python3 teamSchedule.py";
+    shelljs.exec(command, async function (code, stdout, stderr) {
+        let gamesInfo = JSON.parse(stdout)
+        console.log(gamesInfo);
+        for (let i = 0; i < gamesInfo.length; i++) {
+            let awayTeamInfo = await getTeamInfo(gamesInfo[i].away_id);
+            awayTeamInfo["shortName"] = getshortName(awayTeamInfo)
+            gamesInfo[i].awayTeamInfo = awayTeamInfo;
+
+            let homeTeamInfo = await getTeamInfo(gamesInfo[i].home_id);
+            homeTeamInfo["shortName"] = getshortName(homeTeamInfo)
+            gamesInfo[i].homeTeamInfo = homeTeamInfo;
+            // console.log( gamesInfo[i]["winning_pitcher"] )
+        }
         res.render('schedule', { gamesInfo });
     });
 });
 
 
-
+//let qres = await query('insert into 21season_1 (pid, pName, team, atBats, hits,homeRuns, rbi, bb, abv, ops ) value (?, ?, ?, ?,?, ?, ?, ? , ?,?   )', [pID, player["fullName"], player["currentTeam"]["abbreviation"], s21Stats["atBats"], (s21Stats["hits"]), (s21Stats["homeRuns"]), (s21Stats["rbi"]), (s21Stats["baseOnBalls"]), (s21Stats["avg"]), (s21Stats["ops"])]);
 //searchResult
 app.get('/searchResult', async function (req, res) {
     if (req.query.playerInfo === undefined) {
@@ -622,25 +724,25 @@ app.get('/searchResult', async function (req, res) {
                 let teamInfo = await getTeamInfo(jsonPlayerList[i].teamId);
                 jsonPlayerList[i].teamInfo = teamInfo;
             }
-
             res.render('playerSearch', { jsonPlayerList, today: today_() });
         });
     } else {
         let playerID = req.query.playerInfo;
-
         let command = "python3 pDetail.py " + playerID;
         shelljs.exec(command, async function (code, stdout, stderr) {
             let yearByYearStats = JSON.parse(stdout)
             for (let i = 0; i < yearByYearStats.length; i++) {
                 let teamInfo = await getTeamInfo(yearByYearStats[i].teamId);
                 yearByYearStats[i].teamInfo = teamInfo;
-                console.log( yearByYearStats["stats"])
-
             }
             res.render('pDetail', { yearByYearStats });
         });
     }
 });
+
+
+
+
 
 // 0524 수업 내용
 app.use(function (req, res, next) {
